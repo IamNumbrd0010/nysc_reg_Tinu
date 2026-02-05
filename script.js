@@ -37,8 +37,8 @@ const steps = [
   { title: "Final Clearance & ID Processing", description: "Final verification and ID processing.", location: "ICT / Admin Block" }
 ];
 
-let completedSteps = JSON.parse(localStorage.getItem("completedSteps")) || [];
-
+let completedSteps =  [];
+// JSON.parse(localStorage.getItem("completedSteps")) ||
 // LOGIN
 loginBtn.onclick = () => {
   const code = stateCodeInput.value.trim();
@@ -172,5 +172,6 @@ function updateProgress() {
 // if (localStorage.getItem("stateCode")) {
 //   showDashboard();
 // }
+
 
 
