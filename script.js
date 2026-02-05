@@ -112,23 +112,47 @@ function renderSteps() {
   left.appendChild(placeholder);
   left.appendChild(text);
 
+  // RIGHT SIDE: Code input + checkbox
+  const right = document.createElement("div");
+  right.style.display = "flex";
+  right.style.flexDirection = "column";
+  right.style.alignItems = "flex-end";
+  right.style.gap = "5px";
+
+  const codeInput = document.createElement("input");
+  codeInput.type = "text";
+  codeInput.placeholder = "Enter code";
+  codeInput.style.padding = "5px";
+  codeInput.style.width = "120px";
+
+  const verifyBtn = document.createElement("button");
+  verifyBtn.textContent = "Verify";
+  verifyBtn.style.padding = "5px 10px";
+
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = completedSteps.includes(currentIndex);
+  checkbox.disabled = true; // Only checkable after code is verified
 
-  checkbox.onchange = () => {
-    if (checkbox.checked) {
-      completedSteps.push(currentIndex);
-      localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
-      renderSteps(); // Re-render for next step
-      updateProgress();
-    }
+  verifyBtn.onclick = () => {
+    if (!codeInput.value.trim()) return alert("Enter the code");
+    // For now, ANY code is accepted
+    checkbox.checked = true;
+    completedSteps.push(currentIndex);
+    localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
+    renderSteps();
+    updateProgress();
   };
 
+  right.appendChild(codeInput);
+  right.appendChild(verifyBtn);
+  right.appendChild(checkbox);
+
   card.appendChild(left);
-  card.appendChild(checkbox);
+  card.appendChild(right);
   stepsContainer.appendChild(card);
 }
+
 
 
 // PROGRESS
@@ -148,4 +172,5 @@ function updateProgress() {
 // if (localStorage.getItem("stateCode")) {
 //   showDashboard();
 // }
+
 
