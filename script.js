@@ -70,55 +70,66 @@ backBtn.onclick = showDashboard;
 function renderSteps() {
   stepsContainer.innerHTML = "";
 
-  steps.forEach((step, index) => {
-    const card = document.createElement("div");
-    card.className = "step-card";
+  // Find first incomplete step
+  const currentIndex = steps.findIndex((_, i) => !completedSteps.includes(i));
 
-    const left = document.createElement("div");
-    left.className = "step-left";
+  if (currentIndex === -1) {
+    // All steps done
+    const doneMsg = document.createElement("h3");
+    doneMsg.textContent = "🎉 All steps completed!";
+    stepsContainer.appendChild(doneMsg);
+    return;
+  }
 
-    // Placeholder for image
-    const placeholder = document.createElement("div");
-    placeholder.className = "placeholder-img";
-    placeholder.textContent = "Image";
+  const step = steps[currentIndex];
 
-    const text = document.createElement("div");
+  const card = document.createElement("div");
+  card.className = "step-card";
 
-    const title = document.createElement("h4");
-    title.textContent = step.title;
+  const left = document.createElement("div");
+  left.className = "step-left";
 
-    const desc = document.createElement("p");
-    desc.textContent = step.description;
+  // Placeholder
+  const placeholder = document.createElement("div");
+  placeholder.className = "placeholder-img";
+  placeholder.textContent = "Image";
 
-    const loc = document.createElement("small");
-    loc.textContent = `Location: ${step.location}`;
+  const text = document.createElement("div");
 
-    text.appendChild(title);
-    text.appendChild(desc);
-    text.appendChild(loc);
+  const title = document.createElement("h4");
+  title.textContent = step.title;
 
-    left.appendChild(placeholder);
-    left.appendChild(text);
+  const desc = document.createElement("p");
+  desc.textContent = step.description;
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = completedSteps.includes(index);
+  const loc = document.createElement("small");
+  loc.textContent = `Location: ${step.location}`;
 
-    checkbox.onchange = () => {
-      if (checkbox.checked) {
-        completedSteps.push(index);
-      } else {
-        completedSteps = completedSteps.filter(i => i !== index);
-      }
+  text.appendChild(title);
+  text.appendChild(desc);
+  text.appendChild(loc);
+
+  left.appendChild(placeholder);
+  left.appendChild(text);
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = completedSteps.includes(currentIndex);
+
+  checkbox.onchange = () => {
+    if (checkbox.checked) {
+      completedSteps.push(currentIndex);
       localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
+      renderSteps(); // Re-render for next step
       updateProgress();
-    };
+    }
+  };
 
-    card.appendChild(left);
-    card.appendChild(checkbox);
-    stepsContainer.appendChild(card);
-  });
+  card.appendChild(left);
+  card.appendChild(checkbox);
+  stepsContainer.appendChild(card);
 }
+
 
 // PROGRESS
 function updateProgress() {
@@ -137,3 +148,4 @@ function updateProgress() {
 // if (localStorage.getItem("stateCode")) {
 //   showDashboard();
 // }
+
