@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYSC Digital Job List</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<section id="loginPage" class="page center">
+  <div class="card">
+    <h1>NYSC Camp Registration</h1>
+    <input type="text" id="stateCode" placeholder="Enter State Code">
+    <button id="loginBtn">Login</button>
+  </div>
+</section>
+
+<!-- DASHBOARD PAGE -->
+<section id="dashboardPage" class="page hidden">
+  <header>
+    <h2 id="welcomeText"></h2>
+    <div class="progress-box">
+      <span id="dashboardProgressText"></span>
+      <div class="progress-bar">
+        <div id="dashboardProgressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-grid">
+    <div class="card active" id="openJobList">Job List</div>
+    <div class="card inactive">Profile</div>
+    <div class="card inactive">Notifications</div>
+    <div class="card inactive">Help</div>
+  </div>
+</section>
+
+<!-- JOB LIST PAGE -->
+<section id="jobListPage" class="page hidden">
+  <header class="job-header">
+    <button id="backBtn">← Dashboard</button>
+    <h2>NYSC Registration Job List</h2>
+  </header>
+
+  <div class="progress-box">
+    <span id="jobProgressText"></span>
+    <div class="progress-bar">
+      <div id="jobProgressFill"></div>
+    </div>
+  </div>
+
+  <div id="stepsContainer"></div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
